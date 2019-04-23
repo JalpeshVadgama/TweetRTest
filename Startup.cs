@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Tweetr.Models;
+using Tweetr.Service;
 
 namespace TweetR
 {
@@ -27,6 +29,9 @@ namespace TweetR
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            services.AddSingleton<IConfiguration>(Configuration);
+            services.Configure<TwitterApiSetting>(Configuration.GetSection("TwitterApiSettings"));
+            services.AddScoped<ITwitterService, TwitterService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
